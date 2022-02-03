@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 class Event extends Component {
   state = {
+    event: {},
     collapsed: true,
   };
 
@@ -13,7 +14,8 @@ class Event extends Component {
 
   render() {
     const { event } = this.props;
-    // const { collapsed } = this.state;
+    const { collapsed } = this.state;
+
     return (
       <div className="event">
         <h2 className="summary">{event.summary}</h2>
@@ -24,28 +26,36 @@ class Event extends Component {
         <p className="location">
           @{event.summary} | {event.location}
         </p>
-        {/* Collapsed event details */}
-        if(collapsed === true)
-        {
-          <button className="show-details" onClick={this.handleClick}>
-            Show details
-          </button>
-        }
-        else
-        {
-          <div className="details-view">
-            <h4 className="details-header"> About event:</h4>
-            <a className="htmlLink" href={event.htmlLink}>
-              See details on Google Calendar
+
+        {!collapsed && (
+          <div
+            className={`details-view ${this.state.collapsed ? 'hide' : 'show'}`}
+          >
+            <br />
+            <h3 className="about">About Event</h3>
+            <a
+              className="htmlLink"
+              href={event.htmlLink}
+              target="_blank"
+              rel="noreferrer"
+            >
+              See details on Google calendar
             </a>
-            <p className="description">{event.description}</p>
-            <button className="hide-details" onClick={this.handleClick}>
-              Hide details
-            </button>
+            <p id="event-description" className="description">
+              {event.description}
+            </p>
           </div>
-        }
+        )}
+        <button
+          id="eventButton"
+          className={`${collapsed ? 'show' : 'hide'}-details-btn`}
+          onClick={this.handleClick}
+        >
+          {collapsed ? 'show Details' : 'Hide Details'}
+        </button>
       </div>
     );
   }
 }
+
 export default Event;

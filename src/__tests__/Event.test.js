@@ -2,13 +2,13 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Event from '../Event';
-
 import { mockData } from '../mock-data';
 
 describe('<Event /> component', () => {
   let EventWrapper;
+  let event = mockData[0];
   beforeAll(() => {
-    EventWrapper = shallow(<Event event={mockData} />);
+    EventWrapper = shallow(<Event event={event} />);
   });
 
   // Event Details Tests
@@ -32,36 +32,30 @@ describe('<Event /> component', () => {
     expect(EventWrapper.find('.location')).toHaveLength(1);
   });
 
-  test('render event link', () => {
-    expect(EventWrapper.find('.htmlLink')).toHaveLength(1);
+  test('renders the show/hide details button', () => {
+    expect(EventWrapper.find('.show-details-btn')).toHaveLength(1);
   });
 
-  test('render event description', () => {
-    expect(EventWrapper.find('.description')).toHaveLength(1);
-  });
-
-  //Collapse & Button tests
-  test('render show details button', () => {
-    expect(EventWrapper.find('.show-details')).toHaveLength(1);
-  });
-
-  test('clicking show-details button shows event details', () => {
+  test('the event element is collapsed by default', () => {
     EventWrapper.setState({
       collapsed: true,
     });
-    EventWrapper.find('.show-details').simulate('click');
+    expect(EventWrapper.state('collapsed')).toBe(true);
+  });
+
+  test('click on a show-details button to expand the event details', () => {
+    EventWrapper.setState({
+      collapsed: true,
+    });
+    EventWrapper.find('.show-details-btn').simulate('click');
     expect(EventWrapper.state('collapsed')).toBe(false);
   });
 
-  test('render hide details button', () => {
-    expect(EventWrapper.find('.hide-details')).toHaveLength(1);
-  });
-
-  test('clicking hide-details button hides event details', () => {
+  test('click on hide-details button to hide the evet details', () => {
     EventWrapper.setState({
       collapsed: false,
     });
-    EventWrapper.find('.hide-details').simulate('click');
+    EventWrapper.find('.hide-details-btn').simulate('click');
     expect(EventWrapper.state('collapsed')).toBe(true);
   });
 });
