@@ -1,22 +1,12 @@
-import { mockData } from './mock-data';
 import axios from 'axios';
 import NProgress from 'nprogress';
 
-const getToken = async (code) => {
-  const encodeCode = encodeURIComponent(code);
-  const { access_token } = await fetch(
-    'https://l9f5swty47.execute-api.eu-central-1.amazonaws.com/dev/api/token' +
-      '/' +
-      encodeCode
-  )
-    .then((res) => {
-      return res.json();
-    })
-    .catch((error) => error);
+import { mockData } from './mock-data';
 
-  access_token && localStorage.setItem('access_token', access_token);
-
-  return access_token;
+export const extractLocations = (events) => {
+  var extractLocations = events.map((event) => event.location);
+  var locations = [...new Set(extractLocations)];
+  return locations;
 };
 
 const checkToken = async (accessToken) => {
@@ -27,6 +17,22 @@ const checkToken = async (accessToken) => {
     .catch((error) => error.json());
 
   return result;
+};
+
+const getToken = async (code) => {
+  const encodeCode = encodeURIComponent(code);
+  const { access_token } = await fetch(
+    'https://l9f5swty47.execute-api.eu-central-1.amazonaws.com/dev/api/token/' +
+      encodeCode
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .catch((error) => error);
+
+  access_token && localStorage.setItem('access_token', access_token);
+
+  return access_token;
 };
 
 const removeQuery = () => {
@@ -50,14 +56,18 @@ export const getEvents = async () => {
     NProgress.done();
     return mockData;
   }
+  if (!navigator.onLine) {
+    const data = localStorage.getItem('lastEvents');
+    NProgress.done();
+    return data ? JSON.parse(data).events : [];
+  }
 
   const token = await getAccessToken();
 
   if (token) {
     removeQuery();
     const url =
-      'https://l9f5swty47.execute-api.eu-central-1.amazonaws.com/dev/api/get-events' +
-      '/' +
+      'https://l9f5swty47.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/' +
       token;
     const result = await axios.get(url);
     if (result.data) {
@@ -68,12 +78,6 @@ export const getEvents = async () => {
     NProgress.done();
     return result.data.events;
   }
-};
-
-export const extractLocations = (events) => {
-  var extractLocations = events.map((event) => event.location);
-  var locations = [...new Set(extractLocations)];
-  return locations;
 };
 
 export const getAccessToken = async () => {
