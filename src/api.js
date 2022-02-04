@@ -1,7 +1,6 @@
+import { mockData } from './mock-data';
 import axios from 'axios';
 import NProgress from 'nprogress';
-
-import { mockData } from './mock-data';
 
 export const extractLocations = (events) => {
   var extractLocations = events.map((event) => event.location);
@@ -9,20 +8,11 @@ export const extractLocations = (events) => {
   return locations;
 };
 
-const checkToken = async (accessToken) => {
-  const result = await fetch(
-    `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
-  )
-    .then((res) => res.json())
-    .catch((error) => error.json());
-
-  return result;
-};
-
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   const { access_token } = await fetch(
-    'https://l9f5swty47.execute-api.eu-central-1.amazonaws.com/dev/api/token/' +
+    'https://l9f5swty47.execute-api.eu-central-1.amazonaws.com/dev/api/token' +
+      '/' +
       encodeCode
   )
     .then((res) => {
@@ -33,6 +23,16 @@ const getToken = async (code) => {
   access_token && localStorage.setItem('access_token', access_token);
 
   return access_token;
+};
+
+const checkToken = async (accessToken) => {
+  const result = await fetch(
+    `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
+  )
+    .then((res) => res.json())
+    .catch((error) => error.json());
+
+  return result;
 };
 
 const removeQuery = () => {
@@ -56,18 +56,14 @@ export const getEvents = async () => {
     NProgress.done();
     return mockData;
   }
-  if (!navigator.onLine) {
-    const data = localStorage.getItem('lastEvents');
-    NProgress.done();
-    return data ? JSON.parse(data).events : [];
-  }
 
   const token = await getAccessToken();
 
   if (token) {
     removeQuery();
     const url =
-      'https://l9f5swty47.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/' +
+      'https://l9f5swty47.execute-api.eu-central-1.amazonaws.com/dev/api/get-events' +
+      '/' +
       token;
     const result = await axios.get(url);
     if (result.data) {
