@@ -72,7 +72,6 @@ module.exports.getAccessToken = async (event) => {
   const code = decodeURIComponent(`${event.pathParameters.code}`);
 
   return new Promise((resolve, reject) => {
-    //Exchange authorization code for access token with callback, callback is an arrow function with the results as parameters "err" and "token."
     oAuth2Client.getToken(code, (err, token) => {
       if (err) {
         return reject(err);
