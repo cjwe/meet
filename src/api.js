@@ -2,10 +2,21 @@ import { mockData } from './mock-data';
 import axios from 'axios';
 import NProgress from 'nprogress';
 
-export const extractLocations = (events) => {
-  var extractLocations = events.map((event) => event.location);
-  var locations = [...new Set(extractLocations)];
-  return locations;
+const getToken = async (code) => {
+  const encodeCode = encodeURIComponent(code);
+  const { access_token } = await fetch(
+    'https://l9f5swty47.execute-api.eu-central-1.amazonaws.com/dev/api/token' +
+      '/' +
+      encodeCode
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .catch((error) => error);
+
+  access_token && localStorage.setItem('access_token', access_token);
+
+  return access_token;
 };
 
 const checkToken = async (accessToken) => {
@@ -32,22 +43,6 @@ const removeQuery = () => {
   }
 };
 
-const getToken = async (code) => {
-  const encodeCode = encodeURIComponent(code);
-  const { access_token } = await fetch(
-    'https://l9f5swty47.execute-api.eu-central-1.amazonaws.com/dev/api/token' +
-      '/' +
-      encodeCode
-  )
-    .then((res) => {
-      return res.json();
-    })
-    .catch((error) => error);
-  access_token && localStorage.setItem('access_token', access_token);
-
-  return access_token;
-};
-
 export const getEvents = async () => {
   NProgress.start();
 
@@ -55,6 +50,7 @@ export const getEvents = async () => {
     NProgress.done();
     return mockData;
   }
+
   const token = await getAccessToken();
 
   if (token) {
@@ -68,10 +64,16 @@ export const getEvents = async () => {
       var locations = extractLocations(result.data.events);
       localStorage.setItem('lastEvents', JSON.stringify(result.data));
       localStorage.setItem('locations', JSON.stringify(locations));
-      NProgress.done();
-      return result.data.events;
     }
+    NProgress.done();
+    return result.data.events;
   }
+};
+
+export const extractLocations = (events) => {
+  var extractLocations = events.map((event) => event.location);
+  var locations = [...new Set(extractLocations)];
+  return locations;
 };
 
 export const getAccessToken = async () => {
