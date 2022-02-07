@@ -74,9 +74,6 @@ module.exports.getAccessToken = async (event) => {
       console.error(err);
       return {
         statusCode: 500,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
         body: JSON.stringify(err),
       };
     });
@@ -117,7 +114,9 @@ module.exports.getCalendarEvents = (event) => {
       return {
         statusCode: 200,
         headers: {
+          'Access-Control-Allow-Headers': '*',
           'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
         },
         body: JSON.stringify({ events: results.data.items }),
       };
