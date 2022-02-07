@@ -15,7 +15,6 @@ const credentials = {
   redirect_uris: ['https://cjwe.github.io/meet/'],
   javascript_origins: ['https://cjwe.github.io', 'http://localhost:3000'],
 };
-
 const { client_secret, client_id, redirect_uris, calendar_id } = credentials;
 const oAuth2Client = new google.auth.OAuth2(
   client_id,
@@ -40,21 +39,19 @@ module.exports.getAuthURL = async () => {
   };
 };
 
+// Get access token for OAuth2 authorization
 module.exports.getAccessToken = async (event) => {
-  // The values used to instantiate the OAuthClient are at the top of the file
+  //Initiate OAuthClient at top of ile
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
     client_secret,
     redirect_uris[0]
   );
-  // Decode authorization code extracted from the URL query
+  //Decode authorization from URL query
   const code = decodeURIComponent(`${event.pathParameters.code}`);
 
   return new Promise((resolve, reject) => {
-    /**
-     * Exchange authorization code for access token with a "callback" after the exchange.  The callback in this case is an arrow function with the results as parameters: "err" and "token."
-     */
-
+    //Exchange authorization code for access token with callback, callback is an arrow function with the results as parameters "err" and "token."
     oAuth2Client.getToken(code, (err, token) => {
       if (err) {
         return reject(err);
@@ -63,7 +60,7 @@ module.exports.getAccessToken = async (event) => {
     });
   })
     .then((token) => {
-      // Respond with OAuth token
+      //Respond with OAuth token
       return {
         statusCode: 200,
         headers: {
@@ -73,25 +70,29 @@ module.exports.getAccessToken = async (event) => {
       };
     })
     .catch((err) => {
-      // Handle error
+      //Handle error
       console.error(err);
       return {
         statusCode: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
         body: JSON.stringify(err),
       };
     });
 };
 
-module.exports.getCalendarEvents = async (event) => {
+module.exports.getCalendarEvents = (event) => {
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
     client_secret,
     redirect_uris[0]
   );
-
+  //Decode authorization from URL query
   const access_token = decodeURIComponent(
     `${event.pathParameters.access_token}`
   );
+
   oAuth2Client.setCredentials({ access_token });
 
   return new Promise((resolve, reject) => {
@@ -122,9 +123,13 @@ module.exports.getCalendarEvents = async (event) => {
       };
     })
     .catch((err) => {
+      //Handle error
       console.error(err);
       return {
         statusCode: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
         body: JSON.stringify(err),
       };
     });
