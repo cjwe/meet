@@ -15,7 +15,9 @@ const credentials = {
   redirect_uris: ['https://cjwe.github.io/meet/'],
   javascript_origins: ['https://cjwe.github.io', 'http://localhost:3000'],
 };
+
 const { client_secret, client_id, redirect_uris, calendar_id } = credentials;
+
 const oAuth2Client = new google.auth.OAuth2(
   client_id,
   client_secret,
@@ -39,19 +41,15 @@ module.exports.getAuthURL = async () => {
   };
 };
 
-// Get access token for OAuth2 authorization
 module.exports.getAccessToken = async (event) => {
-  //Initiate OAuthClient at top of ile
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
     client_secret,
     redirect_uris[0]
   );
-  //Decode authorization from URL query
   const code = decodeURIComponent(`${event.pathParameters.code}`);
 
   return new Promise((resolve, reject) => {
-    //Exchange authorization code for access token with callback, callback is an arrow function with the results as parameters "err" and "token."
     oAuth2Client.getToken(code, (err, token) => {
       if (err) {
         return reject(err);
@@ -60,7 +58,6 @@ module.exports.getAccessToken = async (event) => {
     });
   })
     .then((token) => {
-      //Respond with OAuth token
       return {
         statusCode: 200,
         headers: {
@@ -70,7 +67,6 @@ module.exports.getAccessToken = async (event) => {
       };
     })
     .catch((err) => {
-      //Handle error
       console.error(err);
       return {
         statusCode: 500,
@@ -79,17 +75,16 @@ module.exports.getAccessToken = async (event) => {
     });
 };
 
-module.exports.getCalendarEvents = (event) => {
+module.exports.getCalendarEvents = async (event) => {
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
     client_secret,
     redirect_uris[0]
   );
-  //Decode authorization from URL query
+
   const access_token = decodeURIComponent(
     `${event.pathParameters.access_token}`
   );
-
   oAuth2Client.setCredentials({ access_token });
 
   return new Promise((resolve, reject) => {
@@ -100,12 +95,13 @@ module.exports.getCalendarEvents = (event) => {
         timeMin: new Date().toISOString(),
         singleEvents: true,
         orderBy: 'startTime',
+        maxResults: 32,
       },
       (error, response) => {
         if (error) {
-          reject(error);
+          return reject(error);
         } else {
-          resolve(response);
+          return resolve(response);
         }
       }
     );
@@ -122,13 +118,9 @@ module.exports.getCalendarEvents = (event) => {
       };
     })
     .catch((err) => {
-      //Handle error
       console.error(err);
       return {
         statusCode: 500,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
         body: JSON.stringify(err),
       };
     });
