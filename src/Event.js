@@ -20,8 +20,7 @@ class Event extends Component {
       <div className="event">
         <h2 className="summary">{event.summary}</h2>
         <p className="startTime">
-          {' '}
-          {event.start.dateTime}{' '}
+          {event.start.dateTime}
           <span className="timeZone">({event.start.timeZone})</span>
         </p>
         <p className="location">
