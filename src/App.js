@@ -28,7 +28,8 @@ class App extends Component {
     this.mounted = false;
   }
 
-  updateEvents = (location, eventCount) => {
+  updateEvents = (location, eventCount = this.state.numberOfEvents) => {
+    this.setState({ isOnline: navigator.onLine ? true : false });
     getEvents().then((events) => {
       const locationEvents =
         location === 'all'
@@ -36,11 +37,27 @@ class App extends Component {
           : events.filter((event) => event.location === location);
       if (this.mounted) {
         this.setState({
-          events: locationEvents.slice(0, this.state.numberOfEvents),
+          events: locationEvents.slice(0, eventCount),
+          location: location,
           currentLocation: location,
         });
       }
     });
+  };
+
+  updateNumberOfEvents = async (e) => {
+    const newNumber = e.target.value ? parseInt(e.target.value) : 100;
+
+    if (newNumber < 1 || newNumber > 32) {
+      this.setState({
+        numberOfEvents: newNumber,
+      });
+    } else {
+      this.setState({
+        errorText: '',
+      });
+      this.updateEvents(this.state.currentLocation, this.state.numberOfEvents);
+    }
   };
 
   render() {
@@ -54,7 +71,10 @@ class App extends Component {
             updateEvents={this.updateEvents}
           />
           <p className="description-text">Number of events:</p>
-          <NumberOfEvents />
+          <NumberOfEvents
+            numberOfEvents={this.state.numberOfEvents}
+            updateNumberOfEvents={this.updateNumberOfEvents}
+          />
         </div>
         <EventList events={this.state.events} />
       </div>
