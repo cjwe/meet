@@ -5,7 +5,7 @@ import NProgress from 'nprogress';
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   const { access_token } = await fetch(
-    'https://l9f5swty47.execute-api.eu-central-1.amazonaws.com/dev/api/token' +
+    'https://1cytv7ye21.execute-api.eu-central-1.amazonaws.com/dev/api/token' +
       '/' +
       encodeCode
   )
@@ -56,7 +56,7 @@ export const getEvents = async () => {
   if (token) {
     removeQuery();
     const url =
-      'https://l9f5swty47.execute-api.eu-central-1.amazonaws.com/dev/api/get-events' +
+      'https://1cytv7ye21.execute-api.eu-central-1.amazonaws.com/dev/api/get-events' +
       '/' +
       token;
     const result = await axios.get(url);
@@ -86,7 +86,7 @@ export const getAccessToken = async () => {
     const code = await searchParams.get('code');
     if (!code) {
       const results = await axios.get(
-        'https://l9f5swty47.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url'
+        'https://1cytv7ye21.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url'
       );
       const { authUrl } = results.data;
       return (window.location.href = authUrl);
