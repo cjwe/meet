@@ -28,17 +28,16 @@ class App extends Component {
     this.mounted = false;
   }
 
-  updateEvents = (location, eventCount = this.state.numberOfEvents) => {
-    this.setState({ isOnline: navigator.onLine ? true : false });
+  updateEvents = async (location, eventCount) => {
     getEvents().then((events) => {
       const locationEvents =
         location === 'all'
           ? events
           : events.filter((event) => event.location === location);
       if (this.mounted) {
+        eventCount = this.state.numberOfEvents;
         this.setState({
           events: locationEvents.slice(0, eventCount),
-          location: location,
           currentLocation: location,
         });
       }
@@ -46,15 +45,16 @@ class App extends Component {
   };
 
   updateNumberOfEvents = async (e) => {
-    const newNumber = e.target.value ? parseInt(e.target.value) : 100;
-
+    const newNumber = e.target.value ? parseInt(e.target.value) : 32;
     if (newNumber < 1 || newNumber > 32) {
-      this.setState({
-        numberOfEvents: newNumber,
+      return this.setState({
+        errorText: 'Please choose a number between 1 and 32.',
+        numberOfEvents: 0,
       });
     } else {
       this.setState({
         errorText: '',
+        numberOfEvents: newNumber,
       });
       this.updateEvents(this.state.currentLocation, this.state.numberOfEvents);
     }
