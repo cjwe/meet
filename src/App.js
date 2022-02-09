@@ -34,14 +34,29 @@ class App extends Component {
         location === 'all'
           ? events
           : events.filter((event) => event.location === location);
-      const eventsToShow = locationEvents.slice(0, this.state.numberOfEvents);
       if (this.mounted) {
         this.setState({
-          events: eventsToShow,
+          events: locationEvents.slice(0, this.state.numberOfEvents),
           currentLocation: location,
         });
       }
     });
+  };
+
+  updateNumberOfEvents = async (e) => {
+    const newNumber = e.target.value ? parseInt(e.target.value) : 32;
+    if (newNumber < 1 || newNumber > 32) {
+      return this.setState({
+        errorText: 'Please choose a number between 1 and 32.',
+        numberOfEvents: 0,
+      });
+    } else {
+      this.setState({
+        errorText: '',
+        numberOfEvents: newNumber,
+      });
+      this.updateEvents(this.state.currentLocation, this.state.numberOfEvents);
+    }
   };
 
   render() {
@@ -55,7 +70,10 @@ class App extends Component {
             updateEvents={this.updateEvents}
           />
           <p className="description-text">Number of events:</p>
-          <NumberOfEvents />
+          <NumberOfEvents
+            numberOfEvents={this.state.numberOfEvents}
+            updateNumberOfEvents={this.updateNumberOfEvents}
+          />
         </div>
         <EventList
           events={this.state.events}
