@@ -4,12 +4,14 @@ import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 import { getEvents, extractLocations } from './api';
+import { getAllByAltText } from '@testing-library/react';
 
 class App extends Component {
   state = {
     events: [],
     locations: [],
     numberOfEvents: 32,
+    currentLocation: 'all',
   };
 
   componentDidMount() {
@@ -28,14 +30,14 @@ class App extends Component {
     this.mounted = false;
   }
 
-  updateEvents = async (location, eventCount) => {
+  updateEvents = async (location, eventCount = this.state.numberOfEvents) => {
+    console.log(eventCount, this.mounted);
     getEvents().then((events) => {
       const locationEvents =
         location === 'all'
           ? events
           : events.filter((event) => event.location === location);
       if (this.mounted) {
-        eventCount = this.state.numberOfEvents;
         this.setState({
           events: locationEvents.slice(0, eventCount),
           currentLocation: location,
@@ -46,6 +48,7 @@ class App extends Component {
 
   updateNumberOfEvents = async (e) => {
     const newNumber = e.target.value ? parseInt(e.target.value) : 32;
+
     if (newNumber < 1 || newNumber > 32) {
       return this.setState({
         errorText: 'Please choose a number between 1 and 32.',
@@ -56,7 +59,7 @@ class App extends Component {
         errorText: '',
         numberOfEvents: newNumber,
       });
-      this.updateEvents(this.state.currentLocation, this.state.numberOfEvents);
+      this.updateEvents(this.state.currentLocation, newNumber);
     }
   };
 

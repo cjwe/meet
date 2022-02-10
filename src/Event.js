@@ -29,7 +29,7 @@ class Event extends Component {
 
         {!collapsed && (
           <div
-            className={`details-view ${this.state.collapsed ? 'hide' : 'show'}`}
+            className={`details-view-${this.state.collapsed ? 'hide' : 'show'}`}
           >
             <br />
             <h3 className="about">About Event</h3>
