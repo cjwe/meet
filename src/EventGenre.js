@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { PieChart, Pie, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 const EventGenre = ({ events }) => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const getData = () => {
-      const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'AngularJS'];
+      const genres = ['React', 'JavaScript', 'Node.js', 'jQuery', 'AngularJS'];
 
       const data = genres.map((genre) => {
         const value = events.filter(({ summary }) =>
@@ -17,6 +17,8 @@ const EventGenre = ({ events }) => {
     };
     setData(() => getData());
   }, [events]);
+
+  const colors = ['#A3C4BC', '#BFD7B5', '#E7EFC5', '#F2DDA4', '#F4B393'];
 
   return (
     <ResponsiveContainer height={400}>
@@ -32,7 +34,11 @@ const EventGenre = ({ events }) => {
           label={({ name, percent }) =>
             `${name} ${(percent * 100).toFixed(0)}%`
           }
-        ></Pie>
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={colors[index]} />
+          ))}
+        </Pie>
       </PieChart>
     </ResponsiveContainer>
   );
