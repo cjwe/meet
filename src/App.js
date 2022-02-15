@@ -89,8 +89,13 @@ class App extends Component {
     const { events } = this.state;
     return (
       <div className="App">
-        <h1 className="title-text">Meet App</h1>
-        <div>
+        <div className="title-wrapper">
+          <h1 className="title-text">Meet App</h1>
+          <h3 className="slogan">
+            Connect and learn with developers worldwide.
+          </h3>
+        </div>
+        <div className="input-wrapper">
           <p className="description-text">Choose your nearest city:</p>
           <CitySearch
             locations={this.state.locations}
@@ -102,32 +107,35 @@ class App extends Component {
             updateNumberOfEvents={this.updateNumberOfEvents}
           />
         </div>
-        <div className="data-vis-wrapper">
+        <div className="data-wrapper">
           <h3>Events in each city</h3>
-          <EventGenre events={events} />
-          <ResponsiveContainer height={400}>
-            <ScatterChart
-              margin={{
-                top: 20,
-                right: 20,
-                bottom: 20,
-                left: 20,
-              }}
-            >
-              <CartesianGrid />
-              <XAxis type="category" dataKey="city" name="City" />
-              <YAxis
-                type="number"
-                dataKey="number"
-                name="Number of events"
-                allowDecimals={false}
-              />
-              <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-              <Scatter data={this.getData()} fill="#8884d8" />
-            </ScatterChart>
-          </ResponsiveContainer>
+
+          <div className="data-vis-wrapper">
+            <EventGenre events={events} />
+            <ResponsiveContainer height={400}>
+              <ScatterChart
+                margin={{
+                  top: 20,
+                  right: 20,
+                  bottom: 20,
+                  left: 20,
+                }}
+              >
+                <CartesianGrid />
+                <XAxis type="category" dataKey="city" name="City" />
+                <YAxis
+                  type="number"
+                  dataKey="number"
+                  name="Number of events"
+                  allowDecimals={false}
+                />
+                <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                <Scatter data={this.getData()} fill="#A3C4BC" />
+              </ScatterChart>
+            </ResponsiveContainer>
+          </div>
         </div>
-        <div>
+        <div className="events-wrapper">
           <EventList events={this.state.events} />
         </div>
       </div>

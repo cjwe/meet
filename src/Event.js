@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarPlus } from '@fortawesome/free-regular-svg-icons';
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faAt } from '@fortawesome/free-solid-svg-icons';
 
 class Event extends Component {
   state = {
@@ -20,11 +24,12 @@ class Event extends Component {
       <div className="event">
         <h2 className="summary">{event.summary}</h2>
         <p className="startTime">
-          {event.start.dateTime}
+          {event.start.dateTime}{' '}
           <span className="timeZone">({event.start.timeZone})</span>
         </p>
         <p className="location">
-          @{event.summary} | {event.location}
+          <FontAwesomeIcon icon={faAt} /> {event.summary}{' '}
+          <FontAwesomeIcon icon={faLocationDot} /> {event.location}
         </p>
 
         {!collapsed && (
@@ -39,7 +44,8 @@ class Event extends Component {
               target="_blank"
               rel="noreferrer"
             >
-              See details on Google calendar
+              <FontAwesomeIcon icon={faCalendarPlus} /> See details on Google
+              calendar
             </a>
             <p id="event-description" className="description">
               {event.description}
@@ -51,7 +57,7 @@ class Event extends Component {
           className={`${collapsed ? 'show' : 'hide'}-details-btn`}
           onClick={this.handleClick}
         >
-          {collapsed ? 'show Details' : 'Hide Details'}
+          {collapsed ? 'Show Details' : 'Hide Details'}
         </button>
       </div>
     );

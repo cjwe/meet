@@ -1,11 +1,36 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:500);
+/* Fonts used 
+font-family: 'JetBrains Mono', monospace;
+font-family: 'Rubik', sans-serif; */
+
+:root {
+  --color-purple: rgb(65, 60, 88);
+  --color-white: #f7f7f6;
+  --color-blue: #a3c4bc;
+  --color-green: #bfd7b5;
+  --color-light-green: #e7efc5;
+  --color-yellow: #f2dea6;
+  --color-orange: #f4b393;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: 'Rubik', sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-purple);
+  background-color: #f7f7f6;
+  opacity: 1;
+  background-image: linear-gradient(#f2dea6 1px, transparent 1px),
+    linear-gradient(to right, #f2dea6 1px, #f7f7f6 1px);
+  background-size: 20px 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
   padding: 2% 5%;
-}
-
-.App * {
-  box-sizing: border-box;
 }
 
 ul {
@@ -14,22 +39,73 @@ ul {
 }
 
 p {
-  margin: 5px 0;
+  margin: 10px 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-mono);
+}
+
+.htmlLink {
+  color: white;
+  flex: 1;
+  line-height: 1.2;
+  text-decoration: none;
+  background-image: linear-gradient(to right, #f2dda4 0, #f2dda4 100%);
+  background-size: 0 100%;
+  background-repeat: no-repeat;
+  transition: background 0.5s;
+  background-position: 0 -0.1em;
+}
+
+.htmlLink:hover {
+  color: white;
+  background-size: 100% 100%;
+}
+
+.title-text {
+  color: var(--color-orange);
+  font-size: 4rem;
+  margin-bottom: 5px;
+  text-shadow: -2.5px 2.5px 0px #f2dea6, -5px 5px 0px #e7efc5,
+    -8px 8px 0px #bfd7b5, -11px 11px 0px #a3c4bc;
+}
+
+.slogan {
+  margin-bottom: 40px;
+  text-shadow: 1px 1px 0px #f7f7f6;
+}
+
+.input-wrapper {
+  padding: 20px 20px 35px;
+  margin: 10px;
+  text-align: center;
+  align-content: center;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-white);
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px rgba(65, 60, 88, 0.2);
 }
 
 .display-none {
   display: none;
 }
+
 .showSuggestions {
   display: block;
 }
 
 input[type='text'],
 input[type='number'] {
+  font-family: var(--font-mono);
+  background-color: var(--color-white);
   padding: 8px 6px 8px 10px;
   border-radius: 4px;
   outline: none;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-green);
   font-size: 14px;
   line-height: 20px;
   align-self: center;
@@ -38,6 +114,10 @@ input[type='number'] {
 
 .city {
   width: 250px;
+}
+
+.eventsNumber {
+  width: 150px;
 }
 
 .CitySearch {
@@ -50,39 +130,60 @@ input[type='number'] {
 }
 
 .suggestions {
+  font-family: var(--font-mono);
   width: 250px;
   position: absolute;
   z-index: 2;
   align-self: center;
   margin: 0;
-  top: 43px;
+  top: 36px;
   font-size: 14px;
-  box-shadow: 10px 10px 16px -12px rgba(0, 0, 0, 0.75);
 }
 
 .suggestions > li {
   text-align: left;
-  padding: 8px 6px 8px 10px;
-  background-color: #eee;
+  padding: 8px;
+  background-color: var(--color-green);
   cursor: default;
 }
 
 .suggestions > li:last-child {
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
+  background-color: none;
+  border: none;
+  border-radius: 0px 0px 5px 5px;
 }
 
 .suggestions > li:hover {
-  background-color: #bcdcdb;
+  background-color: var(--color-light-green);
+  cursor: pointer;
+}
+
+.data-wrapper {
+  padding: 20px 20px 35px;
+  margin: 10px;
+  text-align: center;
+  align-content: center;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-white);
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px rgba(65, 60, 88, 0.2);
+}
+
+.EventList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  list-style: none;
+  text-align: center;
 }
 
 .event {
-  padding: 10px 10px 35px;
-  margin-bottom: 10px;
+  padding: 20px 20px 35px;
+  margin: 10px;
   text-align: left;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  position: relative;
+  background-color: var(--color-green);
+  border: 1px solid var(--color-green);
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px rgba(65, 60, 88, 0.2);
 }
 
 .details-btn {
@@ -120,16 +221,31 @@ input[type='number'] {
   text-align: center;
 }
 
+#eventButton {
+  font-family: var(--font-mono);
+  font-weight: bold;
+  color: var(--color-purple);
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+}
+
+#eventButton:hover {
+  cursor: pointer;
+  background-color: var(--color-light-green);
+}
+
 .button-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 20px;
   padding: 20px;
-  font-family: sans-serif;
 }
 
 .Alert {
-  position: fixed;
+  font-family: var(--font-mono);
+  font-style: italic;
+  font-size: 0.75rem;
   top: 20px;
 }
 
@@ -195,7 +311,6 @@ input[type='number'] {
   color: #fff;
   font-size: 14px;
   letter-spacing: 0.2px;
-  font-family: 'Roboto';
 }
 
 @media only screen and (min-width: 992px) {
