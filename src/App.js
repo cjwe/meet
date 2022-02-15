@@ -109,7 +109,6 @@ class App extends Component {
         </div>
         <div className="data-wrapper">
           <h3>Events in each city</h3>
-
           <div className="data-vis-wrapper">
             <EventGenre events={events} />
             <ResponsiveContainer height={400}>

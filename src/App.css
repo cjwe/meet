@@ -3,7 +3,7 @@ font-family: 'JetBrains Mono', monospace;
 font-family: 'Rubik', sans-serif; */
 
 :root {
-  --color-purple: rgb(65, 60, 88);
+  --color-purple: #413c58;
   --color-white: #f7f7f6;
   --color-blue: #a3c4bc;
   --color-green: #bfd7b5;
@@ -162,16 +162,23 @@ input[type='number'] {
   padding: 20px 20px 35px;
   margin: 10px;
   text-align: center;
-  align-content: center;
-  background-color: white;
+  background-color: var(--color-white);
   border: 1px solid var(--color-white);
   border-radius: 10px;
   box-shadow: 1px 1px 10px rgba(65, 60, 88, 0.2);
 }
 
+.data-vis-wrapper {
+  font-weight: bolder;
+  text-shadow: 1px 1px 1.5px #413c58c4;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 .EventList {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
   list-style: none;
   text-align: center;
 }
@@ -182,7 +189,6 @@ input[type='number'] {
   text-align: left;
   background-color: var(--color-green);
   border: 1px solid var(--color-green);
-  min-height: 300px;
   border-radius: 10px;
   box-shadow: 1px 1px 10px rgba(65, 60, 88, 0.2);
 }
@@ -250,11 +256,6 @@ input[type='number'] {
   top: 20px;
 }
 
-.data-vis-wrapper {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
 .data-vis-wrapper .recharts-responsive-container {
   min-width: 100%;
   display: flex;
