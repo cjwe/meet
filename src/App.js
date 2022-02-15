@@ -110,7 +110,7 @@ class App extends Component {
         <div className="data-wrapper">
           <h3>Events in each city</h3>
           <div className="data-vis-wrapper">
-            <EventGenre events={events} />
+            <EventGenre className="pie-chart" events={events} />
             <ResponsiveContainer height={400}>
               <ScatterChart
                 margin={{

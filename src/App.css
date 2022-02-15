@@ -169,11 +169,14 @@ input[type='number'] {
 }
 
 .data-vis-wrapper {
-  font-weight: bolder;
-  text-shadow: 1px 1px 1.5px #413c58c4;
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+.recharts-pie-label-text {
+  font-weight: bolder;
+  text-shadow: 1px 1px 1px #413c5893;
 }
 
 .EventList {
@@ -184,9 +187,12 @@ input[type='number'] {
 }
 
 .event {
+  justify-content: space-between;
+  flex-direction: column;
+  display: flex;
   padding: 20px 20px 35px;
   margin: 10px;
-  min-height: 220px;
+  min-height: 290px;
   text-align: left;
   background-color: var(--color-green);
   border: 1px solid var(--color-green);
@@ -234,6 +240,7 @@ input[type='number'] {
   font-weight: bold;
   color: var(--color-purple);
   padding: 10px;
+  min-width: 50%;
   border-radius: 10px;
   border: none;
 }
