@@ -3,6 +3,7 @@ import './App.css';
 import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
+import EventGenre from './EventGenre';
 import { getEvents, extractLocations } from './api';
 import {
   ScatterChart,
@@ -85,6 +86,7 @@ class App extends Component {
   };
 
   render() {
+    const { events } = this.state;
     return (
       <div className="App">
         <h1 className="title-text">Meet App</h1>
@@ -100,8 +102,9 @@ class App extends Component {
             updateNumberOfEvents={this.updateNumberOfEvents}
           />
         </div>
-        <div>
+        <div className="data-vis-wrapper">
           <h3>Events in each city</h3>
+          <EventGenre events={events} />
           <ResponsiveContainer height={400}>
             <ScatterChart
               margin={{
@@ -112,11 +115,11 @@ class App extends Component {
               }}
             >
               <CartesianGrid />
-              <XAxis type="category" dataKey="city" name="city" />
+              <XAxis type="category" dataKey="city" name="City" />
               <YAxis
                 type="number"
                 dataKey="number"
-                name="number of events"
+                name="Number of events"
                 allowDecimals={false}
               />
               <Tooltip cursor={{ strokeDasharray: '3 3' }} />
