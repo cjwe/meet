@@ -1,6 +1,6 @@
 # Meet App 
 <p align="center">
-  <img height="200" src="https://i.imgur.com/vG0s9Wq.png" ><br>
+  <img height="200" width="356.531" src="https://i.imgur.com/vG0s9Wq.png" ><br>
   <img height="200" src="https://i.imgur.com/proY7Al.png" >
   <img height="200" src="https://i.imgur.com/eB2MBVG.png" >
   <img height="200" src="https://i.imgur.com/xx8legd.png" >
