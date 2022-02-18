@@ -1,10 +1,10 @@
 # Meet App 
 <p align="center">
-  <img height="250" src="https://i.imgur.com/vG0s9Wq.png" ><br>
-  <img height="250" src="https://i.imgur.com/proY7Al.png" >
-  <img height="250" src="https://i.imgur.com/eB2MBVG.png" >
-  <img height="250" src="https://i.imgur.com/xx8legd.png" >
-  <img height="250" src="https://i.imgur.com/WjmQXvL.png" >
+  <img height="200" src="https://i.imgur.com/vG0s9Wq.png" ><br>
+  <img height="200" src="https://i.imgur.com/proY7Al.png" >
+  <img height="200" src="https://i.imgur.com/eB2MBVG.png" >
+  <img height="200" src="https://i.imgur.com/xx8legd.png" >
+  <img height="200" src="https://i.imgur.com/WjmQXvL.png" >
 </p>
 
 Meet App is a serverless, progressive web application (PWA) built with React using a test-driven development (TDD) technique. The application uses the Google Calendar API to fetch upcoming events. 
