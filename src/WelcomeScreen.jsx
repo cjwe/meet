@@ -34,7 +34,7 @@ function WelcomeScreen(props) {
               </div>
             </div>
             <a
-              href="https://cjwe.github.io/meetup-app/privacy.html"
+              href="https://cjwe.github.io/meet/privacy.html"
               rel="nofollow noopener"
             >
               Privacy policy
