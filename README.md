@@ -17,7 +17,7 @@ Users are able to:
 - Add an app shortcut to the home screen
 - And view a chart showing the number of upcoming events by city.
 
-## Built With 🔨
+## 🔨 Built With 
 - JavaScript,  HTML, CSS
 - React
 - AWS Lambda
@@ -25,8 +25,8 @@ Users are able to:
 - Google Calendar API, OAuth2
 - [Recharts](https://recharts.org/) data visualization
 
-## User Stories 📖
+## 📖 User Stories 
 View user stories [here](https://github.com/cjwe/meet/blob/main/public/user-stories.md), written in Gherkin for testing.
 
-## Live Demo 🌱
+## 🌱 Live Demo 
 Check it out [here](https://cjwe.github.io/meet/).
